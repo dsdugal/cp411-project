@@ -3,7 +3,7 @@
 
 #include "Shape3D.hpp"
 
-class Sphere: Shape3D {
+class Sphere: public Shape3D {
 	void draw();
 };
 

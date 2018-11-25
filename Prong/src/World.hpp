@@ -5,6 +5,7 @@
 #include "Board.hpp"
 #include "Paddle.hpp"
 #include "Scoreboard.hpp"
+#include "Shape3D.hpp"
 
 const int WORLD_ITEMS = 5; // 1 board, 1 scoreboard, 2 paddles, 1 ball?
 

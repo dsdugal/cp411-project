@@ -11,7 +11,7 @@ Matrix Shape3D::getMC() {
 	return mc;
 }
 
-// void Shape3D::draw() {}
+void Shape3D::draw() {}
 
 void Shape3D::reset() {
 	mc.loadIdentity();

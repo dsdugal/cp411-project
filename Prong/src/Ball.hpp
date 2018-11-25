@@ -5,7 +5,7 @@
 
 const GLint DEFAULT_BALL_SPEED = 1;
 
-class Ball: Sphere {
+class Ball: public Sphere {
 	protected:
 		GLint speed;
 	public:
