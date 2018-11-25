@@ -1,5 +1,5 @@
 #include "Sphere.hpp"
 
-// void Sphere::draw() {}
+void Sphere::draw() {}
 
 

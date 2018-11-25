@@ -4,7 +4,8 @@
 #include "Shape3D.hpp"
 
 class Prism: public Shape3D {
-	// void draw();
+	public:
+		void draw();
 };
 
 #endif

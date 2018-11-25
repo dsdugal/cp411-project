@@ -5,9 +5,10 @@
 #include "Board.hpp"
 #include "Camera.hpp"
 #include "Menu.hpp"
+#include "World.hpp"
 
-Board myBoard;
 Camera myCamera;
+World myWorld;
 
 GLint ballSpeed;
 GLint paddleSpeed;
@@ -27,6 +28,7 @@ void init (void) {
 
 void display (void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	myWorld.drawWorld();
 	glFlush();
 	glutSwapBuffers();
 }
