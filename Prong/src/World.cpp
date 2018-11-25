@@ -1,38 +1,33 @@
 #include "World.hpp"
 
 World::World() {
-	/* cant use generic array to hold derived objects
-	items[0] = new Board();
-	items[1] = new Scoreboard();
-	items[2] = new Paddle();
-	items[3] = new Paddle();
-	items[4] = new Ball();
-	*/
+	board = new Board();
+	scoreboard = new Scoreboard();
+	paddleP1 = new Paddle();
+	paddleP2 = new Paddle();
+	ball = new Ball();
 }
 
 World::~World(){
-	/*
-	int i;
-	for (i = 0; i < WORLD_ITEMS; i++) {
-		delete items[i];
-	}
-	*/
+	delete board;
+	delete scoreboard;
+	delete paddleP1;
+	delete paddleP2;
+	delete ball;
 }
 
 void World::drawWorld() {
-	/*
-	int i;
-	for (i = 0; i < WORLD_ITEMS; i++) {
-		items[i]->draw();
-	}
-	*/
+	board->draw();
+	scoreboard->draw();
+	paddleP1->draw();
+	paddleP2->draw();
+	ball->draw();
 }
 
 void World::resetWorld(){
-	/*
-	int i;
-	for (i = 0; i < WORLD_ITEMS; i++) {
-		items[i]->reset();
-	}
-	*/
+	board->reset();
+	scoreboard->reset();
+	paddleP1->reset();
+	paddleP2->reset();
+	ball->reset();
 }

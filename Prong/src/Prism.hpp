@@ -3,8 +3,8 @@
 
 #include "Shape3D.hpp"
 
-class Prism: Shape3D {
-	void draw();
+class Prism: public Shape3D {
+	// void draw();
 };
 
 #endif

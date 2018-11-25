@@ -4,7 +4,7 @@
 #include "Shape3D.hpp"
 
 class Sphere: public Shape3D {
-	void draw();
+	// void draw();
 };
 
 #endif

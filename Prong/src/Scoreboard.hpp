@@ -3,7 +3,7 @@
 
 #include "Shape3D.hpp"
 
-class Scoreboard: Shape3D {
+class Scoreboard: public Shape3D {
 	//
 };
 

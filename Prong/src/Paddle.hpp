@@ -5,7 +5,7 @@
 
 const GLint DEFAULT_PADDLE_SPEED = 1;
 
-class Paddle: Prism {
+class Paddle: public Prism {
 	protected:
 		GLint speed;
 	public:

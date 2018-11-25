@@ -11,6 +11,8 @@ Camera myCamera;
 
 GLint ballSpeed;
 GLint paddleSpeed;
+GLint player1Score;
+GLint player2Score;
 GLint status; // -1 = paused, 0 = in progress, 1 = complete
 GLint windowHeight = 600, windowWidth = 800, windowPosX = 200, windowPosY = 200;
 
@@ -18,6 +20,8 @@ void init (void) {
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	ballSpeed = 0;
 	paddleSpeed = 0;
+	player1Score = 0;
+	player2Score = 0;
 	status = -1; // should choose options before starting game
 }
 

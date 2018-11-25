@@ -5,13 +5,14 @@
 #include "Board.hpp"
 #include "Paddle.hpp"
 #include "Scoreboard.hpp"
-#include "Shape3D.hpp"
-
-const int WORLD_ITEMS = 5; // 1 board, 1 scoreboard, 2 paddles, 1 ball?
 
 class World {
 	public:
-		Shape3D* items[WORLD_ITEMS];
+		Board* board;
+		Scoreboard* scoreboard;
+		Paddle* paddleP1;
+		Paddle* paddleP2;
+		Ball* ball;
 		World();
 		~World();
 		void drawWorld();

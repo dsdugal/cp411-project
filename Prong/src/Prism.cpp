@@ -1,3 +1,3 @@
 #include "Prism.hpp"
 
-void Prism::draw() {}
+// void Prism::draw() {}

@@ -3,7 +3,7 @@
 
 #include "Shape3D.hpp"
 
-class Board: Shape3D {
+class Board: public Shape3D {
 	// the game board
 	// needs score board, etc
 };

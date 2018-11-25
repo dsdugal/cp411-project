@@ -1,7 +1,6 @@
 #ifndef SRC_CAMERA_HPP_
 #define SRC_CAMERA_HPP_
 
-//#include <stdio.h>
 #include "Camera.hpp"
 #include "Matrix.hpp"
 #include "Point.hpp"
@@ -28,4 +27,4 @@ class Camera {
 		void setProjectionMatrix();
 };
 
-#endif /* SRC_CAMERA_HPP_ */
+#endif
