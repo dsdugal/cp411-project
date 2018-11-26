@@ -5,6 +5,12 @@
 
 class Sphere: public Shape3D {
 	public:
+		GLfloat radius;
+		GLint splices, stacks;
+		GLuint textureID;
+		GLUquadric *quad;
+		Sphere();
+		~Sphere();
 		void draw();
 };
 

@@ -11,6 +11,12 @@ Matrix Shape3D::getMC() {
 	return mc;
 }
 
+void Shape3D::ctmMultiply() {
+	mc.transpose();
+	glMultMatrixf(&mc.mat[0][0]);
+	mc.transpose();
+}
+
 void Shape3D::draw() {}
 
 void Shape3D::reset() {

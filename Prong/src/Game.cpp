@@ -15,7 +15,7 @@ GLint paddleSpeed;
 GLint player1Score;
 GLint player2Score;
 GLint status; // -1 = paused, 0 = in progress, 1 = complete
-GLint windowHeight = 600, windowWidth = 800, windowPosX = 200, windowPosY = 200;
+GLint windowHeight = 800, windowWidth = 1200, windowPosX = 200, windowPosY = 200;
 
 void init (void) {
 	glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -28,6 +28,7 @@ void init (void) {
 
 void display (void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	myCamera.setProjectionMatrix();
 	myWorld.drawWorld();
 	glFlush();
 	glutSwapBuffers();
@@ -38,7 +39,7 @@ int main (int argc, char** argv) {
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 	glutInitWindowPosition(windowPosX, windowPosY);
 	glutInitWindowSize(windowWidth, windowHeight);
-	glutCreateWindow("A5");
+	glutCreateWindow("Prong");
 	menu();
 	init();
 	glutDisplayFunc(display);

@@ -18,6 +18,7 @@ class Shape3D {
 		virtual ~Shape3D();
 		virtual void draw();
 		Matrix getMC();
+		void ctmMultiply();
 		void reset();
 		void rotate(GLfloat rx, GLfloat ry, GLfloat rz, GLfloat angle);
 		void scaleDown(GLfloat decrement);
