@@ -1,0 +1,70 @@
+#include "Camera.hpp"
+
+Camera::Camera(){
+	eye.set(10.0, 18.0, 0.0);
+	ref.set(0, 0, 0);
+	viewUp.set(0, 1, 0);
+	aspect = 1.0, vangle = 40.0, dnear = 1.0, dfar = 25.0;
+	setViewNorm();
+}
+
+void Camera::setDefaultCamera(void) {
+	eye.set(10.0, 18.0, 10.0);
+	ref.set(0, 0, 0);
+	viewUp.set(0, 1, 0);
+	aspect = 1.0, vangle = 40.0, dnear = 1.0, dfar = 25.0;
+	setViewNorm();
+}
+
+void Camera::set(Point e, Point l, Vector u) {
+	eye.set(e);
+	ref.set(l);
+	viewUp.set(u);
+	aspect = 1.0, vangle = 40.0, dnear = 1.0, dfar = 25.0;
+	setViewNorm();
+}
+
+void Camera::setRef(GLfloat lx, GLfloat ly, GLfloat lz) {
+	ref.set(lx, ly, lz);
+}
+
+void Camera::setViewNorm() {
+	GLfloat x, y, z, sr;
+	x = ref.x - eye.x;
+	y = ref.y - eye.y;
+	z = ref.z - eye.z;
+	sr = sqrt(x * x + y * y + z * z);
+	x = x / sr;
+	y = y / sr;
+	z = z / sr;
+	viewNorm.set(x, y, z);
+}
+
+void Camera::rotate(GLfloat rx, GLfloat ry, GLfloat rz, GLfloat angle) { //w.r.p.t WC
+	Matrix m;
+	m.rotate(rx, ry, rz, angle);
+	GLfloat vector[4];
+	vector[0] = eye.x;
+	vector[1] = eye.y;
+	vector[2] = eye.z;
+	vector[3] = 1;
+	m.multiplyVector(vector);
+	eye.x = vector[0];
+	eye.y = vector[1];
+	eye.z = vector[2];
+}
+
+void Camera::translate(GLfloat tx, GLfloat ty, GLfloat tz) { //w.r.p.t WC
+	eye.x += tx;
+	eye.y += ty;
+	eye.z += tz;
+}
+
+void Camera::setProjectionMatrix() {
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(vangle, aspect, dnear, dfar);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluLookAt(eye.x, eye.y, eye.z, ref.x, ref.y, ref.z, viewUp.x,viewUp.y,viewUp.z);
+}
