@@ -10,20 +10,45 @@
 Camera myCamera;
 World myWorld;
 
-GLint ballSpeed;
-GLint paddleSpeed;
-GLint player1Score;
-GLint player2Score;
-GLint status; // -1 = paused, 0 = in progress, 1 = complete
+GLint bSpeed, pSpeed;
+GLint scoreP1, scoreP2;
+GLint status, winner;
 GLint windowHeight = 800, windowWidth = 1200, windowPosX = 200, windowPosY = 200;
+
+void inputP1(unsigned char key, int x, int y) {
+	GLint direction = 0;
+	if (key == 'w'){
+		direction = -1;
+	} else if (key == 's'){
+		direction = 1;
+	}
+	myWorld.paddleP1->translate(direction * pSpeed, 0, 0);
+	if (direction != 0) {
+		glutPostRedisplay();
+	}
+}
+
+void inputP2(int key, int x, int y) {
+	GLint direction = 0;
+	if (key == GLUT_KEY_UP){
+		direction = -1;
+	} else if (key == GLUT_KEY_DOWN){
+		direction = 1;
+	}
+	myWorld.paddleP2->translate(direction * pSpeed, 0, 0);
+	if (direction != 0) {
+		glutPostRedisplay();
+	}
+}
 
 void init (void) {
 	glClearColor(0.0, 0.0, 0.0, 1.0);
-	ballSpeed = 0;
-	paddleSpeed = 0;
-	player1Score = 0;
-	player2Score = 0;
-	status = -1; // should choose options before starting game
+	bSpeed = DEFAULT_BALL_SPEED;
+	pSpeed = DEFAULT_PADDLE_SPEED;
+	scoreP1 = 0;
+	scoreP2 = 0;
+	status = PAUSED; // should choose options before starting game
+	winner = 0;
 }
 
 void display (void) {
@@ -43,6 +68,8 @@ int main (int argc, char** argv) {
 	menu();
 	init();
 	glutDisplayFunc(display);
+	glutKeyboardFunc(inputP1);
+	glutSpecialFunc(inputP2);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 	glutMainLoop();
 	return EXIT_SUCCESS;

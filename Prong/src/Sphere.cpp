@@ -1,10 +1,10 @@
 #include "Sphere.hpp"
 
 Sphere::Sphere() {
-	radius = 1.0;
+	radius = 0.25;
 	textureID = 0;
-	splices = 50;
-	stacks = 50;
+	splices = 40; // 50;
+	stacks = 40; // 50;
 	quad = gluNewQuadric();
 }
 

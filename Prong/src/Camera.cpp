@@ -1,18 +1,18 @@
 #include "Camera.hpp"
 
 Camera::Camera(){
-	eye.set(5.0, 5.0, 10.0);
+	eye.set(10.0, 18.0, 0.0);
 	ref.set(0, 0, 0);
 	viewUp.set(0, 1, 0);
-	aspect = 1.0, vangle = 40.0, dnear = 1.0, dfar = 15.0;
+	aspect = 1.0, vangle = 40.0, dnear = 1.0, dfar = 25.0;
 	setViewNorm();
 }
 
 void Camera::setDefaultCamera(void) {
-	eye.set(5.0, 5.0, 10.0);
+	eye.set(10.0, 18.0, 10.0);
 	ref.set(0, 0, 0);
 	viewUp.set(0, 1, 0);
-	aspect = 1.0, vangle = 40.0, dnear = 1.0, dfar = 15.0;
+	aspect = 1.0, vangle = 40.0, dnear = 1.0, dfar = 25.0;
 	setViewNorm();
 }
 
@@ -20,7 +20,7 @@ void Camera::set(Point e, Point l, Vector u) {
 	eye.set(e);
 	ref.set(l);
 	viewUp.set(u);
-	aspect = 1.0, vangle = 40.0, dnear = 1.0, dfar = 15.0;
+	aspect = 1.0, vangle = 40.0, dnear = 1.0, dfar = 25.0;
 	setViewNorm();
 }
 
@@ -30,13 +30,13 @@ void Camera::setRef(GLfloat lx, GLfloat ly, GLfloat lz) {
 
 void Camera::setViewNorm() {
 	GLfloat x, y, z, sr;
-	x = ref.x-eye.x;
-	y = ref.y-eye.y;
-	z = ref.z-eye.z;
-	sr = sqrt(x*x + y*y + z*z);
-	x = x/sr;
-	y = y/sr;
-	z = z/sr;
+	x = ref.x - eye.x;
+	y = ref.y - eye.y;
+	z = ref.z - eye.z;
+	sr = sqrt(x * x + y * y + z * z);
+	x = x / sr;
+	y = y / sr;
+	z = z / sr;
 	viewNorm.set(x, y, z);
 }
 

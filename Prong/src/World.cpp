@@ -4,7 +4,11 @@ World::World() {
 	board = new Board();
 	scoreboard = new Scoreboard();
 	paddleP1 = new Paddle();
+	paddleP1->scaleDown(0.9);
+	paddleP1->translate(0, 0, 4);
 	paddleP2 = new Paddle();
+	paddleP2->scaleDown(0.9);
+	paddleP2->translate(0, 0, -4);
 	ball = new Ball();
 }
 
