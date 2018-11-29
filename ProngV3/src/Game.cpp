@@ -20,19 +20,19 @@ void inputP1(unsigned char key, int x, int y) {
 	GLint direction = 0;
 	if (key == 'w'){
 		direction = -1;
-		if (myWorld.paddleP1->x_pos >= 6){
+		if (myWorld.paddleP1->x_pos >= 4){
 			myWorld.paddleP1->x_pos -= 1;
 		}
 	} else if (key == 's'){
 		direction = 1;
-		if (myWorld.paddleP1->x_pos <= -8){
+		if (myWorld.paddleP1->x_pos <= -6){
 			myWorld.paddleP1->x_pos += 1;
 		}
 	}
-	if (myWorld.paddleP1->x_pos <= -8){
+	if (myWorld.paddleP1->x_pos <= -6){
 		//paddle 1 hitting ceiling
 	}
-	else if (myWorld.paddleP1->x_pos >= 6){
+	else if (myWorld.paddleP1->x_pos >= 4){
 		//paddle 1 hitting floor
 	}
 	else {
@@ -48,19 +48,19 @@ void inputP2(int key, int x, int y) {
 	GLint direction = 0;
 	if (key == GLUT_KEY_UP){
 		direction = -1;
-		if (myWorld.paddleP2->x_pos >= 6){
+		if (myWorld.paddleP2->x_pos >= 4){
 			myWorld.paddleP2->x_pos -= 1;
 		}
 	} else if (key == GLUT_KEY_DOWN){
 		direction = 1;
-		if (myWorld.paddleP2->x_pos <= -8){
+		if (myWorld.paddleP2->x_pos <= -6){
 			myWorld.paddleP2->x_pos += 1;
 		}
 	}
-	if (myWorld.paddleP2->x_pos <= -8){
+	if (myWorld.paddleP2->x_pos <= -6){
 		//paddle 2 hitting ceiling
 	}
-	else if (myWorld.paddleP2->x_pos >= 6){
+	else if (myWorld.paddleP2->x_pos >= 4){
 		//paddle 2 hitting floor
 	}
 	else {

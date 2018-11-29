@@ -30,7 +30,7 @@ void Prism::drawFace(int faceIndex) {
 void Prism::draw() {
     glPushMatrix();
     this->ctmMultiply();
-	glScalef(scale, scale, scale);
+	glScalef(x_scale, y_scale, z_scale);
     for (int i = 0; i < 6; i++) {
     		drawFace(i);
     }

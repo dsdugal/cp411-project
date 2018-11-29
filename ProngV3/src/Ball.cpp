@@ -2,7 +2,9 @@
 
 Ball::Ball() {
 	mc.loadIdentity();
-	scale = DEFAULT_SCALE;
+	x_scale = DEFAULT_SCALE;
+	y_scale = DEFAULT_SCALE;
+	z_scale = DEFAULT_SCALE;
 	speed = DEFAULT_BALL_SPEED;
 }
 
@@ -10,7 +12,9 @@ Ball::~Ball() {}
 
 void Ball::reset() {
 	mc.loadIdentity();
-	scale = DEFAULT_SCALE;
+	x_scale = DEFAULT_SCALE;
+	y_scale = DEFAULT_SCALE;
+	z_scale = DEFAULT_SCALE;
 	speed = DEFAULT_BALL_SPEED;
 }
 
