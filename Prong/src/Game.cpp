@@ -7,22 +7,41 @@
 #include "Menu.hpp"
 #include "World.hpp"
 
+const int PADDLE_CEILING = -6;
+const int PADDLE_FLOOR = 4;
+
 Camera myCamera;
 World myWorld;
 
 GLint bSpeed, pSpeed;
 GLint scoreP1, scoreP2;
 GLint status, winner;
-GLint windowHeight = 800, windowWidth = 1200, windowPosX = 200, windowPosY = 200;
+GLint windowHeight = 800, windowWidth = 1600, windowPosX = 200, windowPosY = 200;
+int temp;
 
 void inputP1(unsigned char key, int x, int y) {
 	GLint direction = 0;
 	if (key == 'w'){
 		direction = -1;
+		if (myWorld.paddleP1->x_pos >= PADDLE_FLOOR){
+			myWorld.paddleP1->x_pos += direction;
+		}
 	} else if (key == 's'){
 		direction = 1;
+		if (myWorld.paddleP1->x_pos <= PADDLE_CEILING){
+			myWorld.paddleP1->x_pos += direction;
+		}
 	}
-	myWorld.paddleP1->translate(direction * pSpeed, 0, 0);
+	if (myWorld.paddleP1->x_pos <= PADDLE_CEILING){
+		// paddle 1 hitting ceiling
+	}
+	else if (myWorld.paddleP1->x_pos >= PADDLE_FLOOR){
+		// paddle 1 hitting floor
+	}
+	else {
+		myWorld.paddleP1->translate(direction * pSpeed, 0, 0);
+	}
+
 	if (direction != 0) {
 		glutPostRedisplay();
 	}
@@ -32,10 +51,25 @@ void inputP2(int key, int x, int y) {
 	GLint direction = 0;
 	if (key == GLUT_KEY_UP){
 		direction = -1;
+		if (myWorld.paddleP2->x_pos >= PADDLE_FLOOR){
+			myWorld.paddleP2->x_pos += direction;
+		}
 	} else if (key == GLUT_KEY_DOWN){
 		direction = 1;
+		if (myWorld.paddleP2->x_pos <= PADDLE_CEILING){
+			myWorld.paddleP2->x_pos += direction;
+		}
 	}
-	myWorld.paddleP2->translate(direction * pSpeed, 0, 0);
+	if (myWorld.paddleP2->x_pos <= -6){
+		// paddle 2 hitting ceiling
+	}
+	else if (myWorld.paddleP2->x_pos >= 4){
+		// paddle 2 hitting floor
+	}
+	else {
+		myWorld.paddleP2->translate(direction * pSpeed, 0, 0);
+	}
+
 	if (direction != 0) {
 		glutPostRedisplay();
 	}

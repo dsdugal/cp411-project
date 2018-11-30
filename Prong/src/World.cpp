@@ -5,11 +5,12 @@ World::World() {
 	scoreboard = new Scoreboard();
 	paddleP1 = new Paddle();
 	paddleP1->scaleDown(0.9);
-	paddleP1->translate(0, 0, 4);
+	paddleP1->translate(-1, 0, 4.5);
 	paddleP2 = new Paddle();
 	paddleP2->scaleDown(0.9);
-	paddleP2->translate(0, 0, -4);
+	paddleP2->translate(-1, 0, -4.5);
 	ball = new Ball();
+	ball->translate(-1, 0, 0);
 }
 
 World::~World(){
@@ -21,7 +22,7 @@ World::~World(){
 }
 
 void World::drawWorld() {
-	board->draw();
+	board->drawBoard();	//call to drawBoard instead of draw
 	scoreboard->draw();
 	paddleP1->draw();
 	paddleP2->draw();

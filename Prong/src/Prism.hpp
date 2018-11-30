@@ -11,6 +11,9 @@ class Prism: public Shape3D {
 		void drawFace(int faceIndex);
 	public:
 		Prism();
+		void resizeX(float factor);
+		void resizeY(float factor);
+		void resizeZ(float factor);
 		void draw();
 };
 
