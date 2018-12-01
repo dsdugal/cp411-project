@@ -31,7 +31,7 @@ class Shape3D {
 		void scaleDown(GLfloat decrement);
 		void scaleUp(GLfloat increment);
 		void translate(GLfloat x, GLfloat y, GLfloat z);
-		void stretch(GLfloat factor);	//implement this stretch function
+		void stretch(GLfloat factor);	// implement this stretch function
 };
 
 #endif

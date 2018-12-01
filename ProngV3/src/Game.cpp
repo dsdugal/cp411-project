@@ -1,11 +1,17 @@
+#include "glsl/Angel.h"
 #include <GL/glew.h>
 #include <GL/glut.h>
+#include "GL/glaux.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "Board.hpp"
 #include "Camera.hpp"
 #include "Menu.hpp"
 #include "World.hpp"
+#include "pixmap/RGBpixmap.h"
+
+const int PADDLE_CEILING = -5;
+const int PADDLE_FLOOR = 4;
 
 Camera myCamera;
 World myWorld;
@@ -13,27 +19,30 @@ World myWorld;
 GLint bSpeed, pSpeed;
 GLint scoreP1, scoreP2;
 GLint status, winner;
-GLint windowHeight = 600, windowWidth = 800, windowPosX = 200, windowPosY = 200;
+GLint windowHeight = 800, windowWidth = 1600, windowPosX = 200, windowPosY = 200;
 int temp;
+GLuint ProgramObject; //GLSL program object  for a4p3
+
+RGBpixmap pix[4];    // make 4 (empty) pixmaps
 
 void inputP1(unsigned char key, int x, int y) {
 	GLint direction = 0;
 	if (key == 'w'){
 		direction = -1;
-		if (myWorld.paddleP1->x_pos >= 4){
-			myWorld.paddleP1->x_pos -= 1;
+		if (myWorld.paddleP1->x_pos >= PADDLE_FLOOR){
+			myWorld.paddleP1->x_pos += direction;
 		}
 	} else if (key == 's'){
 		direction = 1;
-		if (myWorld.paddleP1->x_pos <= -6){
-			myWorld.paddleP1->x_pos += 1;
+		if (myWorld.paddleP1->x_pos <= PADDLE_CEILING){
+			myWorld.paddleP1->x_pos += direction;
 		}
 	}
-	if (myWorld.paddleP1->x_pos <= -6){
-		//paddle 1 hitting ceiling
+	if (myWorld.paddleP1->x_pos <= PADDLE_CEILING){
+		// paddle 1 hitting ceiling
 	}
-	else if (myWorld.paddleP1->x_pos >= 4){
-		//paddle 1 hitting floor
+	else if (myWorld.paddleP1->x_pos >= PADDLE_FLOOR){
+		// paddle 1 hitting floor
 	}
 	else {
 		myWorld.paddleP1->translate(direction * pSpeed, 0, 0);
@@ -48,20 +57,20 @@ void inputP2(int key, int x, int y) {
 	GLint direction = 0;
 	if (key == GLUT_KEY_UP){
 		direction = -1;
-		if (myWorld.paddleP2->x_pos >= 4){
-			myWorld.paddleP2->x_pos -= 1;
+		if (myWorld.paddleP2->x_pos >= PADDLE_FLOOR){
+			myWorld.paddleP2->x_pos += direction;
 		}
 	} else if (key == GLUT_KEY_DOWN){
 		direction = 1;
-		if (myWorld.paddleP2->x_pos <= -6){
-			myWorld.paddleP2->x_pos += 1;
+		if (myWorld.paddleP2->x_pos <= PADDLE_CEILING){
+			myWorld.paddleP2->x_pos += direction;
 		}
 	}
-	if (myWorld.paddleP2->x_pos <= -6){
-		//paddle 2 hitting ceiling
+	if (myWorld.paddleP2->x_pos <= PADDLE_CEILING){
+		// paddle 2 hitting ceiling
 	}
-	else if (myWorld.paddleP2->x_pos >= 4){
-		//paddle 2 hitting floor
+	else if (myWorld.paddleP2->x_pos >= PADDLE_FLOOR){
+		// paddle 2 hitting floor
 	}
 	else {
 		myWorld.paddleP2->translate(direction * pSpeed, 0, 0);
@@ -74,12 +83,58 @@ void inputP2(int key, int x, int y) {
 
 void init (void) {
 	glClearColor(0.0, 0.0, 0.0, 1.0);
+
+//	glEnable(GL_LINE_SMOOTH);
+//	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+//	glEnable(GL_BLEND);
+//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//	glShadeModel(GL_SMOOTH);
+
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+
+//	glDisable(GL_LIGHTING);
+//	glEnable(GL_LIGHT0);
+//	glEnable(GL_DEPTH_TEST);
+//	glEnable(GL_TEXTURE_2D);
+//	glEnable(GL_CULL_FACE);
+//	glEnable(GL_NORMALIZE);
+
 	bSpeed = DEFAULT_BALL_SPEED;
 	pSpeed = DEFAULT_PADDLE_SPEED;
 	scoreP1 = 0;
 	scoreP2 = 0;
 	status = PAUSED; // should choose options before starting game
 	winner = 0;
+
+	ProgramObject = InitShader( "vertexshader.txt", "fragmentshader.txt" );
+	glUseProgram(0);
+
+	pix[0].readBMPFile("ball.bmp");
+	pix[0].setTexture(2001);
+	pix[1].readBMPFile("board.bmp");
+	pix[1].setTexture(2002);
+	pix[2].readBMPFile("player1.bmp");
+	pix[2].setTexture(2003);
+	pix[3].readBMPFile("player2.bmp");
+	pix[3].setTexture(2004);
+
+	myWorld.paddleP1->textureID = 2003;
+	myWorld.paddleP2->textureID = 2004;
+	myWorld.ball->textureID = 2001;
+
+	myWorld.board->topLeft->textureID = 2002;
+	myWorld.board->topMiddle->textureID = 2002;
+	myWorld.board->topRight->textureID = 2002;
+	myWorld.board->leftTop->textureID = 2002;
+	myWorld.board->leftBottom->textureID = 2002;
+	myWorld.board->rightTop->textureID = 2002;
+	myWorld.board->rightBottom->textureID = 2002;
+	myWorld.board->bottom->textureID = 2002;
+	myWorld.board->surface->textureID = 2002;
+
 }
 
 void display (void) {
@@ -96,6 +151,9 @@ int main (int argc, char** argv) {
 	glutInitWindowPosition(windowPosX, windowPosY);
 	glutInitWindowSize(windowWidth, windowHeight);
 	glutCreateWindow("Prong");
+
+	glewInit(); // for GSLS
+
 	menu();
 	init();
 	glutDisplayFunc(display);

@@ -18,7 +18,6 @@ GLint Paddle::getSpeed() {
 	return speed;
 }
 
-
 void Paddle::setSpeed(GLint s) {
 	speed = s;
 }

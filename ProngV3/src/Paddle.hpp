@@ -9,9 +9,6 @@ class Paddle: public Prism {
 	protected:
 		GLint speed;
 	public:
-//		GLint x_pos;
-//		GLint y_pos;
-//		GLint z_pos;
 		Paddle();
 		~Paddle();
 		void reset();

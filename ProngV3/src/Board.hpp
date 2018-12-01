@@ -5,18 +5,19 @@
 #include "Prism.hpp"
 
 class Board: public Shape3D {
-	// the game board
-	// needs score board, etc
-public:
-	Prism* top_wall;
-	Prism* bottom_wall;
-	Prism* topLeft_wall;
-	Prism* botLeft_wall;
-	Prism* topRight_wall;
-	Prism* botRight_wall;
-	Board();
-	void drawBoard();
-
+	public:
+		Prism* topLeft;
+		Prism* topMiddle;
+		Prism* topRight;
+		Prism* leftTop;
+		Prism* leftBottom;
+		Prism* rightTop;
+		Prism* rightBottom;
+		Prism* bottom;
+		Prism* surface;
+		Board();
+		~Board();
+		void drawBoard();
 };
 
 #endif
