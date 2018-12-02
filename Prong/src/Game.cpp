@@ -14,6 +14,7 @@ const int PADDLE_CEILING = -5;
 const int PADDLE_FLOOR = 4;
 
 Camera myCamera;
+Scoreboard myScore;
 World myWorld;
 
 GLfloat r = 0.0, g = 0.0, b = 0.0;
@@ -21,22 +22,9 @@ GLint bSpeed, pSpeed;
 GLint scoreP1, scoreP2, scoreMax;
 GLint status, winner;
 GLint windowHeight = 800, windowWidth = 1600, windowPosX = 200, windowPosY = 200;
+
 GLuint ProgramObject; // GLSL program object
-
 RGBpixmap pix[4];    // make 4 (empty) pixmaps
-
-void scoreUpdate(GLint updateP1, GLint updateP2) {
-	scoreP1 += updateP1;
-	scoreP2 += updateP2;
-	if (scoreP1 >= scoreMax) {
-		status = COMPLETE;
-		winner = 1;
-	}
-	if (scoreP2 >= scoreMax) {
-		status = COMPLETE;
-		winner = 2;
-	}
-}
 
 void inputP1(unsigned char key, int x, int y) {
 	if (status == IN_PROGRESS) {
@@ -153,7 +141,10 @@ void display (void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	myCamera.setProjectionMatrix();
-	myWorld.drawWorld();
+	if (status != DEBUG && status != COMPLETE) {
+		myWorld.drawWorld();
+	}
+	myScore.drawScore(scoreP1, scoreP2);
 	if (status == PAUSED) {
 		pauseMessage();
 	} else if (status == COMPLETE && winner > 0) {

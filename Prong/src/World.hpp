@@ -9,7 +9,6 @@
 class World {
 	public:
 		Board* board;
-		Scoreboard* scoreboard;
 		Paddle* paddleP1;
 		Paddle* paddleP2;
 		Ball* ball;

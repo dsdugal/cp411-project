@@ -10,9 +10,12 @@
 enum GameStatus {
 	PAUSED,
 	IN_PROGRESS,
-	COMPLETE
+	COMPLETE,
+	DEBUG
 };
 
+void setScore(GLint updateP1, GLint updateP2);
+void updateScore(GLint updateP1, GLint updateP2);
 void pauseMessage();
 void winMessage();
 void mainMenu(GLint option);
