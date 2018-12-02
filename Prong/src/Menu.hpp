@@ -13,8 +13,10 @@ enum GameStatus {
 	COMPLETE
 };
 
-void winMessage(GLint winner);
+void pauseMessage();
+void winMessage();
 void mainMenu(GLint option);
+void debugMenu(GLint option);
 void scoreMenu(GLint option);
 void menu ();
 

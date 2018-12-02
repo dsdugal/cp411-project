@@ -10,6 +10,7 @@ class Prism: public Shape3D {
 	private:
 		void drawFace(int faceIndex);
 	public:
+		GLuint textureID;
 		Prism();
 		void resizeX(float factor);
 		void resizeY(float factor);
