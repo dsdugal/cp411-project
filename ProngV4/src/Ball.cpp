@@ -28,37 +28,29 @@ void Ball::setSpeed(GLint s) {
 }
 
 void Ball::update() {
-	printf("speed = %f \n", speed);
-	x_pos *= speed;
-	y_pos *= speed;
-	z_pos *= speed;
-	printf(" x = %f \n", x_pos);
-	printf(" y = %f \n", y_pos);
-	printf(" z = %f \n", z_pos);
-	if(x_pos <= -7.5 * speed ){	//x position of top middle, top right and top left
+	translate(x_pos * speed, y_pos * speed, z_pos * speed);
+	speed += 0.000003;	//dont know why?
+	if(x_pos < -7.5){	//x position of top middle, top right and top left
 		printf("passed top wall \n");
-		speed *= -1;
-		x_pos *= speed;
-		printf("speed after = %f \n", speed);
+		printf("x = %f \n", x_pos);
+		x_pos *= -1;
+		printf("x = %f \n", x_pos);
 	}
-//	else if(x_pos >= 5.5*speed){	//x position of bottom
-//		printf("passed bottom wall \n");
-//	    speed *= -1;
-//	    //translate(x_pos * speed, y_pos, z_pos);
-//	    x_pos *= speed;
-//	}
-//	else if(z_pos >= 5.35*speed ){	//z and y position of left walls
-//		printf("passed left wall \n");
-//	    speed *= -1;
-//	    //translate(x_pos, y_pos, z_pos * speed);
-//	    z_pos *= speed;
-//	}
-//	else if(z_pos <= -5.35*speed ){	//z and y position of right walls
-//		printf("passed right wall \n");
-//	    speed *= -1;
-//	   // translate(x_pos, y_pos, z_pos * speed);
-//	    z_pos *= speed;
-//	}
-	translate(x_pos, y_pos, z_pos);
+	else if(x_pos >= 5.5){	//x position of bottom
+		printf("passed bottom wall \n");
+	    //translate(x_pos * speed, y_pos, z_pos);
+	    x_pos *= -1;
+	}
+
+	if(z_pos >= 5.35 ){	//z and y position of left walls
+		printf("passed left wall \n");
+	    //translate(x_pos, y_pos, z_pos * speed);
+	    z_pos *= -1;
+	}
+	else if(z_pos <= -5.35 ){	//z and y position of right walls
+		printf("passed right wall \n");
+	   // translate(x_pos, y_pos, z_pos * speed);
+	    z_pos *= -1;
+	}
 	glutPostRedisplay();
 }

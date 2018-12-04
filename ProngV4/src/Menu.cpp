@@ -63,6 +63,10 @@ void mainMenu (GLint option) {
 			break;
 		}
 		case 2: { // reset
+			status = IN_PROGRESS;
+			winner = 0;
+			scoreP1 = 0;
+			scoreP2 = 0;
 			myScore.resetScoreboard();
 			myWorld.resetWorld();
 			break;
@@ -142,7 +146,7 @@ void musicMenu(GLint option){
 			PlaySound("PongTheme.wav", NULL, SND_ASYNC|SND_FILENAME|SND_LOOP);;
 		} break;
 		case 2: {
-			PlaySound("ToT.wav", NULL, SND_ASYNC|SND_FILENAME|SND_LOOP);;
+			PlaySound("Culture.wav", NULL, SND_ASYNC|SND_FILENAME|SND_LOOP);;
 		} break;
 		case 3: {
 			PlaySound(NULL, NULL, 0);
@@ -176,6 +180,6 @@ void menu () {
 	glutAddMenuEntry("Reset   ", 2);
 	glutAddSubMenu("Score   ",   s);
 	glutAddSubMenu("Debug   ",   d);
-	glutAddSubMenu("Music   ", m);
+	glutAddSubMenu("Music   ",   m);
 	glutAddMenuEntry("Quit    ", 3);
 }

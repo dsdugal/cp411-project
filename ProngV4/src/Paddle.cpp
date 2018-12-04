@@ -4,6 +4,7 @@ Paddle::Paddle() {
 	// mc.loadIdentity();
 	// scale = DEFAULT_SCALE;
 	speed = DEFAULT_PADDLE_SPEED;
+	hit = false;
 }
 
 Paddle::~Paddle() {}

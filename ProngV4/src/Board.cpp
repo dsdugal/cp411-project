@@ -60,12 +60,12 @@ Board::~Board() {
 
 void Board::drawBoard() {
 	topLeft->draw();
-//	topMiddle->draw();
+	topMiddle->draw();
 	topRight->draw();
 	leftTop->draw();
 	leftBottom->draw();
 	rightTop->draw();
 	rightBottom->draw();
 	bottom->draw();
-//	surface->draw();
+	surface->draw();
 }

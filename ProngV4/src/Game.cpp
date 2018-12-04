@@ -153,8 +153,6 @@ void display (void) {
 	if (status != DEBUG && status != COMPLETE) {
 		glEnable(GL_DEPTH_TEST);
 		myWorld.drawWorld();
-		//as of right now, when status = DEBUG, the world completely disappears and wont
-		//draw again. Should we just leave the world drawn and still debug?
 	}
 	glDisable(GL_DEPTH_TEST);
 	myScore.drawScore(scoreP1, scoreP2);
@@ -173,7 +171,47 @@ void display (void) {
 	glutPostRedisplay();
 	glFlush();
 	glutSwapBuffers();
-	//glutPostRedisplay();
+}
+
+bool hitPaddle(Sphere* ball){
+    if(myWorld.ball->z_pos <= -4.5 || myWorld.ball->z_pos >= 4.5){
+        GLint paddleRad = 2;
+        if(myWorld.ball->z_pos >= -2){	//what is negative 2?
+            if(abs(myWorld.ball->x_pos - myWorld.paddleP1->x_pos) < paddleRad && abs(myWorld.ball->y_pos - myWorld.paddleP1->y_pos) < paddleRad){
+                myWorld.paddleP1->hit = true;
+                return true;
+            }
+        }
+
+        else{
+            if(abs(myWorld.ball->x_pos - myWorld.paddleP2->x_pos) < paddleRad && abs(myWorld.ball->y_pos - myWorld.paddleP2->y_pos) < paddleRad){
+                myWorld.paddleP2->hit = true;
+                return true;
+            }
+        }
+    }
+    else{
+        return false;
+    }
+}
+
+void updateBall(int millisec){
+	myWorld.ball->translate(myWorld.ball->x_pos*bSpeed*5, myWorld.ball->y_pos*bSpeed*5, myWorld.ball->z_pos*bSpeed*5);
+	//bSpeed += 0.0003;
+	if (hitPaddle(myWorld.ball)){	//hits paddles
+		myWorld.ball->z_pos *= -1;
+	}
+	if (myWorld.ball->x_pos < -6.0 || myWorld.ball->x_pos > 5.5){	//hits top or bottom wall
+		//printf("hit top/bottom wall \n");
+		myWorld.ball->x_pos *= -1;
+		//printf("x = %f \n", myWorld.ball->x_pos);
+	}
+	else if (myWorld.ball->z_pos < -5.35 || myWorld.ball->z_pos > 5.35){	//hits left or right wall
+		myWorld.ball->z_pos *= -1;
+		//printf("hit right/left wall \n");
+	}
+	glutTimerFunc(millisec, updateBall, millisec);
+	glutPostRedisplay();
 }
 
 int main (int argc, char** argv) {
@@ -189,6 +227,7 @@ int main (int argc, char** argv) {
 	glutKeyboardFunc(inputP1);
 	glutSpecialFunc(inputP2);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
+	glutTimerFunc( 5, updateBall, 5 );
 	glutMainLoop();
 	return EXIT_SUCCESS;
 }
