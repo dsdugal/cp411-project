@@ -17,9 +17,9 @@ class Shape3D {
 		GLfloat z_scale;
 		GLint counter;
 	public:
-		GLint x_pos;
-		GLint y_pos;
-		GLint z_pos;
+		GLfloat x_pos;	//change back to int if necessary
+		GLfloat y_pos;
+		GLfloat z_pos;
 		Shape3D();
 		virtual ~Shape3D();
 		virtual void draw();

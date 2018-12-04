@@ -9,9 +9,12 @@ Paddle::Paddle() {
 Paddle::~Paddle() {}
 
 void Paddle::reset() {
-	// mc.loadIdentity();
+	mc.loadIdentity();
 	// scale = DEFAULT_SCALE;
 	speed = DEFAULT_PADDLE_SPEED;
+	x_pos = mc.mat[0][3];
+	y_pos = mc.mat[1][3];
+	z_pos = mc.mat[2][3];
 }
 
 GLint Paddle::getSpeed() {

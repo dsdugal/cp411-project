@@ -5,7 +5,7 @@
 #include "Prism.hpp"
 
 class Board: public Shape3D {
-	private:
+	public:
 		Prism* topLeft;
 		Prism* topMiddle;
 		Prism* topRight;
@@ -15,7 +15,6 @@ class Board: public Shape3D {
 		Prism* rightBottom;
 		Prism* bottom;
 		Prism* surface;
-	public:
 		Board();
 		~Board();
 		void drawBoard();

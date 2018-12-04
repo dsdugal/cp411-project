@@ -2,19 +2,19 @@
 #define SRC_BALL_HPP_
 
 #include "Sphere.hpp"
+//#include "World.hpp"
 
-const GLint DEFAULT_BALL_SPEED = 1;
+const GLfloat DEFAULT_BALL_SPEED = 0.002;
 
 class Ball: public Sphere {
-	protected:
-		GLint speed;
 	public:
+		GLfloat speed;
 		Ball();
 		~Ball();
 		void reset();
 		GLint getSpeed();
 		void setSpeed(GLint s);
-		void spawn();
+		void update();
 };
 
 #endif

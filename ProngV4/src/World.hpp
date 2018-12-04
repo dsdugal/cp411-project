@@ -9,13 +9,13 @@
 class World {
 	public:
 		Board* board;
-		Scoreboard* scoreboard;
 		Paddle* paddleP1;
 		Paddle* paddleP2;
 		Ball* ball;
 		World();
 		~World();
 		void drawWorld();
+		//void updateBall();
 		void resetWorld();
 };
 
