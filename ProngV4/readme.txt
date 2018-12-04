@@ -1,6 +1,6 @@
-Name: Randy Dang
-ID: 150888580
-Email: dang8580@mylaurier.ca
+Names: Randy Dang, Kevin Liang, Dustin Dugal
+IDs: 150888580, 150935980, 080689200
+Emails: dang8580@mylaurier.ca
 Assignment_ID: cp411p
 Homework statement: I/we claim that the enclosed submission is my individual/our team work 
 
