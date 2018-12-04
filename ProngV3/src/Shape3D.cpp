@@ -31,6 +31,9 @@ void Shape3D::reset() {
 	y_scale = DEFAULT_SCALE;
 	z_scale = DEFAULT_SCALE;
 	counter = 0;
+	x_pos = mc.mat[0][3];
+	y_pos = mc.mat[1][3];
+	z_pos = mc.mat[2][3];
 }
 
 void Shape3D::rotate(GLfloat rx, GLfloat ry, GLfloat rz, GLfloat angle) {

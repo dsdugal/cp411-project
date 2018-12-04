@@ -4,6 +4,9 @@
 #include "GL/glaux.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <iostream>
+#include <windows.h>
+#include <MMSystem.h>
 #include "Board.hpp"
 #include "Camera.hpp"
 #include "Menu.hpp"
@@ -14,74 +17,76 @@ const int PADDLE_CEILING = -5;
 const int PADDLE_FLOOR = 4;
 
 Camera myCamera;
+Scoreboard myScore;
 World myWorld;
 
+GLfloat r = 0.0, g = 0.0, b = 0.0;
 GLint bSpeed, pSpeed;
-GLint scoreP1, scoreP2;
+GLint scoreP1, scoreP2, scoreMax;
 GLint status, winner;
+GLint music;	//music = 0 is sound off
+GLint reset;
 GLint windowHeight = 800, windowWidth = 1600, windowPosX = 200, windowPosY = 200;
-int temp;
-GLuint ProgramObject; //GLSL program object  for a4p3
 
+GLuint ProgramObject; // GLSL program object
 RGBpixmap pix[4];    // make 4 (empty) pixmaps
 
 void inputP1(unsigned char key, int x, int y) {
-	GLint direction = 0;
-	if (key == 'w'){
-		direction = -1;
-		if (myWorld.paddleP1->x_pos >= PADDLE_FLOOR){
-			myWorld.paddleP1->x_pos += direction;
+	if (status == IN_PROGRESS) {
+		GLint direction = 0;
+		if (key == 'w'){
+			direction = -1;
+			if (myWorld.paddleP1->x_pos >= PADDLE_FLOOR){
+				myWorld.paddleP1->x_pos += direction;
+			}
+		} else if (key == 's'){
+			direction = 1;
+			if (myWorld.paddleP1->x_pos <= PADDLE_CEILING){
+				myWorld.paddleP1->x_pos += direction;
+			}
 		}
-	} else if (key == 's'){
-		direction = 1;
 		if (myWorld.paddleP1->x_pos <= PADDLE_CEILING){
-			myWorld.paddleP1->x_pos += direction;
+			// paddle 1 hitting ceiling
+		} else if (myWorld.paddleP1->x_pos >= PADDLE_FLOOR){
+			// paddle 1 hitting floor
+		} else {
+			myWorld.paddleP1->translate(direction * pSpeed, 0, 0);
 		}
-	}
-	if (myWorld.paddleP1->x_pos <= PADDLE_CEILING){
-		// paddle 1 hitting ceiling
-	}
-	else if (myWorld.paddleP1->x_pos >= PADDLE_FLOOR){
-		// paddle 1 hitting floor
-	}
-	else {
-		myWorld.paddleP1->translate(direction * pSpeed, 0, 0);
-	}
-
-	if (direction != 0) {
-		glutPostRedisplay();
+		if (direction != 0) {
+			glutPostRedisplay();
+		}
 	}
 }
 
 void inputP2(int key, int x, int y) {
-	GLint direction = 0;
-	if (key == GLUT_KEY_UP){
-		direction = -1;
-		if (myWorld.paddleP2->x_pos >= PADDLE_FLOOR){
-			myWorld.paddleP2->x_pos += direction;
+	if (status == IN_PROGRESS) {
+		GLint direction = 0;
+		if (key == GLUT_KEY_UP){
+			direction = -1;
+			if (myWorld.paddleP2->x_pos >= PADDLE_FLOOR){
+				myWorld.paddleP2->x_pos += direction;
+			}
+		} else if (key == GLUT_KEY_DOWN){
+			direction = 1;
+			if (myWorld.paddleP2->x_pos <= PADDLE_CEILING){
+				myWorld.paddleP2->x_pos += direction;
+			}
 		}
-	} else if (key == GLUT_KEY_DOWN){
-		direction = 1;
 		if (myWorld.paddleP2->x_pos <= PADDLE_CEILING){
-			myWorld.paddleP2->x_pos += direction;
+			// paddle 2 hitting ceiling
+		} else if (myWorld.paddleP2->x_pos >= PADDLE_FLOOR){
+			// paddle 2 hitting floor
+		} else {
+			myWorld.paddleP2->translate(direction * pSpeed, 0, 0);
 		}
-	}
-	if (myWorld.paddleP2->x_pos <= PADDLE_CEILING){
-		// paddle 2 hitting ceiling
-	}
-	else if (myWorld.paddleP2->x_pos >= PADDLE_FLOOR){
-		// paddle 2 hitting floor
-	}
-	else {
-		myWorld.paddleP2->translate(direction * pSpeed, 0, 0);
-	}
-
-	if (direction != 0) {
-		glutPostRedisplay();
+		if (direction != 0) {
+			glutPostRedisplay();
+		}
 	}
 }
 
 void init (void) {
+	PlaySound("PongTheme.wav", NULL, SND_ASYNC|SND_FILENAME|SND_LOOP);
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 
 //	glEnable(GL_LINE_SMOOTH);
@@ -106,8 +111,10 @@ void init (void) {
 	pSpeed = DEFAULT_PADDLE_SPEED;
 	scoreP1 = 0;
 	scoreP2 = 0;
+	scoreMax = 10;
 	status = PAUSED; // should choose options before starting game
 	winner = 0;
+	reset = 0;
 
 	ProgramObject = InitShader( "vertexshader.txt", "fragmentshader.txt" );
 	glUseProgram(0);
@@ -139,10 +146,33 @@ void init (void) {
 
 void display (void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+	//PlaySound("ToT.wav", NULL, SND_ASYNC|SND_FILENAME|SND_LOOP);
 	myCamera.setProjectionMatrix();
-	myWorld.drawWorld();
+	if (status != DEBUG && status != COMPLETE) {
+		glEnable(GL_DEPTH_TEST);
+		myWorld.drawWorld();
+		//as of right now, when status = DEBUG, the world completely disappears and wont
+		//draw again. Should we just leave the world drawn and still debug?
+	}
+	glDisable(GL_DEPTH_TEST);
+	myScore.drawScore(scoreP1, scoreP2);
+	if (status == PAUSED) {
+		pauseMessage();
+	} else if (status == COMPLETE && winner > 0) {
+		if (winner == 1) {
+			r = 1.0; b = 0.0;
+		} else if (winner == 2) {
+			r = 0.0; b = 1.0;
+		}
+		glColor3f(r, g, b);
+		winMessage();
+		glColor3f(0.0, 0.0, 0.0);
+	}
+	glutPostRedisplay();
 	glFlush();
 	glutSwapBuffers();
+	//glutPostRedisplay();
 }
 
 int main (int argc, char** argv) {
@@ -151,9 +181,7 @@ int main (int argc, char** argv) {
 	glutInitWindowPosition(windowPosX, windowPosY);
 	glutInitWindowSize(windowWidth, windowHeight);
 	glutCreateWindow("Prong");
-
-	glewInit(); // for GSLS
-
+	glewInit();
 	menu();
 	init();
 	glutDisplayFunc(display);

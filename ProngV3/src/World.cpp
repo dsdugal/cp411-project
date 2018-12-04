@@ -2,7 +2,6 @@
 
 World::World() {
 	board = new Board();
-	scoreboard = new Scoreboard();
 	paddleP1 = new Paddle();
 	paddleP1->scaleDown(0.9);
 	paddleP1->translate(-1, 0, 4.5);
@@ -15,24 +14,25 @@ World::World() {
 
 World::~World(){
 	delete board;
-	delete scoreboard;
 	delete paddleP1;
 	delete paddleP2;
 	delete ball;
 }
 
 void World::drawWorld() {
-	board->drawBoard();	//call to drawBoard instead of draw
-	scoreboard->draw();
+	board->drawBoard();
 	paddleP1->draw();
 	paddleP2->draw();
-	ball->draw();
+	//ball->draw();
 }
 
 void World::resetWorld(){
 	board->reset();
-	scoreboard->reset();
+
 	paddleP1->reset();
+	paddleP1->translate(-1, 0, 4.5);
+
 	paddleP2->reset();
-	ball->reset();
+	paddleP2->translate(-1, 0, -4.5);
+//	ball->reset();
 }
